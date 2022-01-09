@@ -33,10 +33,26 @@ function operate(sign, a, b){
 const calculatorBody = document.querySelector('#calculator-container');
 
 function makeButtons(){
-    for(let i = 0; i < 10; i++){
+    const clearButton = document.createElement('button');
+    clearButton.textContent = 'Clear';
+    calculatorBody.appendChild(clearButton).id = 'clear';
+
+    for(let i = 1; i <= 10; i++){
         const numButton = document.createElement('button');
+        numButton.textContent = i;
         calculatorBody.appendChild(numButton).value=i;
+        if(i===10){
+            numButton.textContent=0;
+            numButton.value=0;
+        }
     }
+
+    const operators = ['+', '-', '*', '/', '='];
+    operators.forEach(btn =>{
+        const opButton = document.createElement('button');
+        opButton.textContent = btn;
+        calculatorBody.appendChild(opButton).id = btn;
+    });
 }
 
 makeButtons();

@@ -30,6 +30,7 @@ function operate(sign, a, b){
     
 }
 
+let allButtons = {};
 const calculatorBody = document.querySelector('#calculator-container');
 
 function makeButtons(){
@@ -38,23 +39,24 @@ function makeButtons(){
     calculatorBody.appendChild(clearButton).id = 'clear';
 
     for(let i = 1; i <= 10; i++){
-        const numButton = document.createElement('button');
-        numButton.textContent = i;
-        calculatorBody.appendChild(numButton).value=i;
+        allButtons[`btn${i}`] = document.createElement('button');
+        allButtons[`btn${i}`].textContent = i;
+        calculatorBody.appendChild(allButtons[`btn${i}`]).value=i;
         if(i===10){
-            numButton.textContent=0;
-            numButton.value=0;
+            allButtons[`btn${i}`].textContent=0;
+            allButtons[`btn${i}`].value=0;
         }
     }
 
     const operators = ['+', '-', '*', '/', '='];
     operators.forEach(btn =>{
-        const opButton = document.createElement('button');
-        opButton.textContent = btn;
-        calculatorBody.appendChild(opButton).id = btn;
+        allButtons[`btn${btn}`] = document.createElement('button');
+        allButtons[`btn${btn}`].textContent = btn;
+        calculatorBody.appendChild(allButtons[`btn${btn}`]).id = btn;
     });
 }
 
 makeButtons();
 
-console.log(operate(divide, 4, 4));
+console.log(allButtons);
+

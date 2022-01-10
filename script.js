@@ -34,17 +34,17 @@ let allButtons = {};
 const calculatorBody = document.querySelector('#calculator-container');
 
 function makeButtons(){
-    const clearButton = document.createElement('button');
-    clearButton.textContent = 'Clear';
-    calculatorBody.appendChild(clearButton).id = 'clear';
+    allButtons['clear'] = document.createElement('button');
+    allButtons['clear'].textContent = 'Clear';
+    calculatorBody.appendChild(allButtons['clear']).id = 'clear';
 
     for(let i = 1; i <= 10; i++){
         allButtons[`btn${i}`] = document.createElement('button');
         allButtons[`btn${i}`].textContent = i;
-        calculatorBody.appendChild(allButtons[`btn${i}`]).value=i;
+        calculatorBody.appendChild(allButtons[`btn${i}`]).id=i;
         if(i===10){
             allButtons[`btn${i}`].textContent=0;
-            allButtons[`btn${i}`].value=0;
+            allButtons[`btn${i}`].id=0;
         }
     }
 
@@ -58,5 +58,11 @@ function makeButtons(){
 
 makeButtons();
 
-console.log(allButtons);
+function buttonClick(){
+    const display = document.querySelector('#display');
+    display.textContent = Math.random();
+}
 
+for (btn in allButtons){
+    allButtons[btn].addEventListener('click', buttonClick);
+}

@@ -41,6 +41,7 @@ function makeButtons(){
     for(let i = 1; i <= 10; i++){
         allButtons[`btn${i}`] = document.createElement('button');
         allButtons[`btn${i}`].textContent = i;
+        allButtons[`btn${i}`].className = 'numButton';
         calculatorBody.appendChild(allButtons[`btn${i}`]).id=i;
         if(i===10){
             allButtons[`btn${i}`].textContent=0;
@@ -52,6 +53,7 @@ function makeButtons(){
     operators.forEach(btn =>{
         allButtons[`btn${btn}`] = document.createElement('button');
         allButtons[`btn${btn}`].textContent = btn;
+        allButtons[`btn${btn}`].className = 'opButton';
         calculatorBody.appendChild(allButtons[`btn${btn}`]).id = btn;
     });
 }

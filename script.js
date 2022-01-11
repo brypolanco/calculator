@@ -73,14 +73,29 @@ function buttonClick(e){
         displayArray.push(e.target.id);
         display.textContent = displayArray.join("");
     }
-
+/*
     if(e.target.className === 'numButton'){
         let value1 = Number(e.target.id);
         console.log('value '+value1);
-    }
+    }*/
     console.log(displayArray);
 }
 
+allButtons['clear'].addEventListener('click', ()=> {
+    while(displayArray.length > 0){
+        displayArray.pop();
+    }
+    display.textContent = '';
+});
+
+const numButtonsArray = Array.from(document.querySelectorAll('.numButton'));
+numButtonsArray.forEach(btn => btn.addEventListener('click', buttonClick));
+
+const opButtonsArray = Array.from(document.querySelectorAll('.opButton'));
+opButtonsArray.forEach(btn => btn.addEventListener('click', buttonClick));
+
+
+/*
 for (btn in allButtons){
     allButtons[btn].addEventListener('click', buttonClick);
-}
+}*/

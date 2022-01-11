@@ -62,6 +62,7 @@ function makeButtons(){
 
 makeButtons();
 
+
 let displayArray = [];
 function buttonClick(e){
     if (displayArray[0] == null){
@@ -71,6 +72,11 @@ function buttonClick(e){
     else if(displayArray){
         displayArray.push(e.target.id);
         display.textContent = displayArray.join("");
+    }
+
+    if(e.target.className === 'numButton'){
+        let value1 = Number(e.target.id);
+        console.log('value '+value1);
     }
     console.log(displayArray);
 }

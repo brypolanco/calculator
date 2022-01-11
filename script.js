@@ -30,6 +30,8 @@ function operate(sign, a, b){
     
 }
 
+
+const display = document.querySelector('#display');
 let allButtons = {};
 const calculatorBody = document.querySelector('#calculator-container');
 
@@ -60,9 +62,17 @@ function makeButtons(){
 
 makeButtons();
 
-function buttonClick(){
-    const display = document.querySelector('#display');
-    display.textContent = Math.random();
+let displayArray = [];
+function buttonClick(e){
+    if (displayArray[0] == null){
+        displayArray[0] = e.target.id;
+        display.textContent = displayArray[0];
+    }
+    else if(displayArray){
+        displayArray.push(e.target.id);
+        display.textContent = displayArray.join("");
+    }
+    console.log(displayArray);
 }
 
 for (btn in allButtons){

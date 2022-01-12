@@ -12,6 +12,10 @@ function multiply(a,b){
 }
 
 function divide(a,b){
+    if(b===0){
+        alert("Can't divide by zero. Clear calculator and try again.");
+        return;
+    }
     return a/b;
 }
 
@@ -76,6 +80,7 @@ let currentState = {
     valB: '',
     display: '',
     changeValue: false,
+    result: 0,
 };
 
 function displayClick(value){
@@ -85,12 +90,11 @@ function displayClick(value){
 
 function getValB (){
     const valBArray = Array.from(currentState['display']);
-    let position = valBArray.findIndex((element)=>{
+    const position = valBArray.findIndex((element)=>{
         return isNaN(element);
     });
 
-    let valBSliced = valBArray.slice(position+1);
-    return toString(valBSliced);
+    return currentState['display'].slice(position+1);
 
 }
 
@@ -104,17 +108,36 @@ numButtonsArray.forEach(btn => btn.addEventListener('click', () => {
     displayClick(btn);
     if(currentState['changeValue']===false){
         currentState['valA']=currentState['display'];
+        currentState['valAInt']=parseInt(currentState['valA']);
     }
     else if(currentState['changeValue']===true){
         let valB = getValB();
         currentState['valB']= valB;
+        currentState['valBInt']=parseInt(currentState['valB']);
     }
-    console.log(currentState);
+    //console.log(currentState);
 }));
 
 const opButtonsArray = Array.from(document.querySelectorAll('.opButton'));
 opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
-    displayClick(btn);
+    if(currentState['valB']){
+        currentState['changeValue']=false;
+        currentState['result'] = operate(currentState['operator'],currentState['valAInt'],currentState['valBInt']);
+        currentState['valA'] = currentState['result'];
+    }
     currentState['operator']=btn.id;
     currentState['changeValue']=true;
+
+    displayClick(btn);
+    console.log(currentState);
 }));
+
+buttons['equals'].addEventListener('click',()=>{
+    currentState['result'] = operate(currentState['operator'],currentState['valAInt'],currentState['valBInt']).toString();
+    currentState['valA'] = currentState['result'];
+    display.textContent = currentState['valA'];
+    currentState['valB'] = '';
+    currentState['changeValue']=false;
+    currentState['result']='';
+    console.log(currentState);
+});

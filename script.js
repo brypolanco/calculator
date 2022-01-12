@@ -71,17 +71,27 @@ const buttons = makeButtons();
 
 
 //Button Event Listeners
-//let displayArray = [];
 let currentState = {
-    valueA: [],
-    valueB: [],
+    valA: '',
+    valB: '',
     display: '',
+    changeValue: false,
 };
 
-function buttonClick(value){
-    currentState['display'] += String(value.id);
+function displayClick(value){
+    currentState['display'] += value.id;
     display.textContent = currentState['display'];
-    console.log(currentState['display']);
+}
+
+function getValB (){
+    const valBArray = Array.from(currentState['display']);
+    let position = valBArray.findIndex((element)=>{
+        return isNaN(element);
+    });
+
+    let valBSliced = valBArray.slice(position+1);
+    return toString(valBSliced);
+
 }
 
 buttons['clear'].addEventListener('click', ()=> {
@@ -90,12 +100,21 @@ buttons['clear'].addEventListener('click', ()=> {
 });
 
 const numButtonsArray = Array.from(document.querySelectorAll('.numButton'));
-numButtonsArray.forEach(btn => btn.addEventListener('click', () => buttonClick(btn)));
+numButtonsArray.forEach(btn => btn.addEventListener('click', () => {
+    displayClick(btn);
+    if(currentState['changeValue']===false){
+        currentState['valA']=currentState['display'];
+    }
+    else if(currentState['changeValue']===true){
+        let valB = getValB();
+        currentState['valB']= valB;
+    }
+    console.log(currentState);
+}));
 
 const opButtonsArray = Array.from(document.querySelectorAll('.opButton'));
 opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
-    buttonClick(btn);
+    displayClick(btn);
     currentState['operator']=btn.id;
+    currentState['changeValue']=true;
 }));
-
-console.log(opButtonsArray);

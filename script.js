@@ -31,6 +31,7 @@ function operate(sign, a, b){
     
 }
 
+
 //Button Creations
 const display = document.querySelector('#display');
 const calculatorBody = document.querySelector('#calculator-container');
@@ -67,21 +68,25 @@ function makeButtons(){
     return allButtons;
 }
 const buttons = makeButtons();
-console.log(buttons)
+
 
 //Button Event Listeners
-let currentState = {};
-let displayArray = [];
-function buttonClick(value){
-    displayArray.push(value.id);
-    display.textContent = displayArray.join("");
+//let displayArray = [];
+let currentState = {
+    valueA: [],
+    valueB: [],
+    display: '',
+};
 
-    console.log(displayArray);
+function buttonClick(value){
+    currentState['display'] += String(value.id);
+    display.textContent = currentState['display'];
+    console.log(currentState['display']);
 }
 
 buttons['clear'].addEventListener('click', ()=> {
-    while(displayArray.length > 0){displayArray.pop();}
-    display.textContent = '';
+    currentState['display'] = '';
+    display.textContent = currentState['display'];
 });
 
 const numButtonsArray = Array.from(document.querySelectorAll('.numButton'));
@@ -90,7 +95,7 @@ numButtonsArray.forEach(btn => btn.addEventListener('click', () => buttonClick(b
 const opButtonsArray = Array.from(document.querySelectorAll('.opButton'));
 opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
     buttonClick(btn);
-    console.log(currentState['operator']=btn.id);
+    currentState['operator']=btn.id;
 }));
 
 console.log(opButtonsArray);

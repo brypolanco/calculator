@@ -106,12 +106,11 @@ function getValB (){
 buttons['clear'].addEventListener('click', ()=> {
     currentState['display'] = '';
     currentState['valA']='';
-    //currentState['valAInt']= 0;
     currentState['valB']= '';
-    //currentState['valBInt']=0;
     currentState['result']=0;
-    currentState['changeValue']===false;
+    currentState['changeValue']=false;
     display.textContent = currentState['display'];
+    console.log(currentState);
 });
 
 const numButtonsArray = Array.from(document.querySelectorAll('.numButton'));
@@ -119,14 +118,12 @@ numButtonsArray.forEach(btn => btn.addEventListener('click', () => {
     displayClick(btn);
     if(currentState['changeValue']===false){
         currentState['valA']=currentState['display'];
-        //currentState['valAInt']=parseInt(currentState['valA']);
 
         console.log(currentState);
     }
     else if(currentState['changeValue']===true){
         let valB = getValB();
         currentState['valB']= valB;
-        //currentState['valBInt']=parseInt(currentState['valB']);
 
         console.log(currentState);
     }

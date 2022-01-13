@@ -20,6 +20,7 @@ function divide(a,b){
 }
 
 function operate(sign, a, b){
+
     switch(sign){
         case '+':
             return add(a,b);
@@ -57,10 +58,6 @@ function makeButtons(){
         }
     }
 
-    allButtons['equals'] = document.createElement('button');
-    allButtons['equals'].textContent = '=';
-    calculatorBody.appendChild(allButtons['equals']).id = '=';
-
     const operators = ['+', '-', '*', '/'];
     operators.forEach(btn =>{
         allButtons[`btn${btn}`] = document.createElement('button');
@@ -68,6 +65,14 @@ function makeButtons(){
         allButtons[`btn${btn}`].className = 'opButton';
         calculatorBody.appendChild(allButtons[`btn${btn}`]).id = btn;
     });
+
+    allButtons['dot'] = document.createElement('button');
+    allButtons['dot'].textContent = '.';
+    calculatorBody.appendChild(allButtons['dot']).id = '.';
+
+    allButtons['equals'] = document.createElement('button');
+    allButtons['equals'].textContent = '=';
+    calculatorBody.appendChild(allButtons['equals']).id = '=';
 
     return allButtons;
 }
@@ -91,14 +96,18 @@ function displayClick(value){
 function getValB (){
     const valBArray = Array.from(currentState['display']);
     let position = valBArray.reverse().findIndex((element)=>{
-        return isNaN(element);
+        if(isNaN(element)){
+            if(element!='.'){
+                return isNaN(element);
+            }
+        }
     });
 
     position = valBArray.length - position - 1;
 
     console.log(position)
 
-    console.log(currentState['display'].slice(position+1));
+
     return currentState['display'].slice(position+1);
 
 }
@@ -125,6 +134,8 @@ buttons['clear'].addEventListener('click', ()=> {
     display.textContent = currentState['display'];
     console.log(currentState);
 });
+
+buttons['dot'].addEventListener('click', () => displayClick(buttons['dot']));
 
 buttons['equals'].addEventListener('click',()=>{
     currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB'])).toString();

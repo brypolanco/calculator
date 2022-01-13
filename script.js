@@ -1,35 +1,51 @@
 //Operations
 function add(a,b){
-    return (a+b);
+    let result = a+b;
+    result = resultConversion(result);
+    return result;
 }
 
 function subtract(a,b){
-    return a-b;
+    let result = a-b;
+    result = resultConversion(result);
+    return result;
 }
 
 function multiply(a,b){
-    return a*b;
+    let result = a*b;
+    result = resultConversion(result);
+    return result;
 }
 
 function divide(a,b){
-    if(b===0){
+    if(b==0){
         alert("Can't divide by zero. Clear calculator and try again.");
         return;
     }
-    return a/b;
+    let result = a/b;
+    result = resultConversion(result);
+    return result;
+}
+
+function resultConversion(result){
+    return Math.round((result + Number.EPSILON) * 100) / 100;
 }
 
 function operate(sign, a, b){
+    let aFloat = parseFloat(a);
+    let bFloat = parseFloat(b);
+
+    console.log(`${aFloat} + '' + ${bFloat}`)
 
     switch(sign){
         case '+':
-            return add(a,b);
+            return add(aFloat,bFloat);
         case '-':
-            return subtract(a,b);
+            return subtract(aFloat,bFloat);
         case '*':
-            return multiply(a,b);
+            return multiply(aFloat,bFloat);
         case '/':
-            return divide(a,b);
+            return divide(aFloat,bFloat);
         default:
             break;
     }
@@ -138,7 +154,7 @@ buttons['clear'].addEventListener('click', ()=> {
 buttons['dot'].addEventListener('click', () => displayClick(buttons['dot']));
 
 buttons['equals'].addEventListener('click',()=>{
-    currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB'])).toString();
+    currentState['result'] = operate(currentState['operator'],currentState['valA'],currentState['valB']).toString();
     currentState['display'] = currentState['result'];
     display.textContent = currentState['result'];
     currentState['valA']=currentState['result']
@@ -166,7 +182,7 @@ const opButtonsArray = Array.from(document.querySelectorAll('.opButton'));
 opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
     if(currentState['valB']){
         currentState['changeValue']=false;
-        currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB'])).toString();
+        currentState['result'] = operate(currentState['operator'],currentState['valA'],currentState['valB']).toString();
         currentState['valA'] = currentState['result'];
         clear('valB');
     }

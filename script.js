@@ -1,6 +1,6 @@
 //Operations
 function add(a,b){
-    return a+b;
+    return (a+b);
 }
 
 function subtract(a,b){
@@ -80,7 +80,7 @@ let currentState = {
     valB: '',
     display: '',
     changeValue: false,
-    result: 0,
+    result: '',
 };
 
 function displayClick(value){
@@ -103,13 +103,35 @@ function getValB (){
 
 }
 
+function clear(...objKey){
+    objKey.forEach((key)=>{
+        if(typeof currentState[key]==='string'){
+            currentState[key]='';
+        }
+        else if(typeof currentState[key]==='number'){
+            currentState[key]=0;
+        }
+        else if(typeof currentState[key]==='boolean'){
+            currentState[key]=false;
+        }
+        else{
+            currentState[key]=null;
+        }
+    });
+}
+
 buttons['clear'].addEventListener('click', ()=> {
-    currentState['display'] = '';
-    currentState['valA']='';
-    currentState['valB']= '';
-    currentState['result']=0;
-    currentState['changeValue']=false;
+    clear('display','valA','valB','result','operator','changeValue');
     display.textContent = currentState['display'];
+    console.log(currentState);
+});
+
+buttons['equals'].addEventListener('click',()=>{
+    currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB'])).toString();
+    currentState['display'] = currentState['result'];
+    display.textContent = currentState['result'];
+    currentState['valA']=currentState['result']
+    clear('valB','result','operator','changeValue');
     console.log(currentState);
 });
 
@@ -133,24 +155,14 @@ const opButtonsArray = Array.from(document.querySelectorAll('.opButton'));
 opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
     if(currentState['valB']){
         currentState['changeValue']=false;
-        currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB']));
+        currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB'])).toString();
         currentState['valA'] = currentState['result'];
-        currentState['valB'] = '';
+        clear('valB');
     }
 
     currentState['operator']=btn.id;
     currentState['changeValue']=true;
-
+    console.log(btn);
     displayClick(btn);
     console.log(currentState);
 }));
-
-buttons['equals'].addEventListener('click',()=>{
-    currentState['result'] = operate(currentState['operator'],parseInt(currentState['valA']),parseInt(currentState['valB']));
-    currentState['valA'] = currentState['result'];
-    display.textContent = currentState['valA'];
-    currentState['valB'] = '';
-    currentState['changeValue']=false;
-    currentState['result']='';
-    console.log(currentState);
-});

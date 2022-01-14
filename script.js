@@ -60,18 +60,15 @@ const calculatorBody = document.querySelector('#calculator-container');
 function makeButtons(){
     let allButtons = {};
     allButtons['clear'] = document.createElement('button');
-    allButtons['clear'].textContent = 'Clear';
+    allButtons['clear'].textContent = 'AC';
     calculatorBody.appendChild(allButtons['clear']).id = 'clear';
 
-    for(let i = 1; i <= 10; i++){
+    for(let i = 9; i >= 0; i--){
         allButtons[`btn${i}`] = document.createElement('button');
         allButtons[`btn${i}`].textContent = i;
         allButtons[`btn${i}`].className = 'numButton';
-        calculatorBody.appendChild(allButtons[`btn${i}`]).id=i;
-        if(i===10){
-            allButtons[`btn${i}`].textContent=0;
-            allButtons[`btn${i}`].id=0;
-        }
+        allButtons[`btn${i}`].value = i;
+        calculatorBody.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
     }
 
     const operators = ['+', '-', '*', '/'];
@@ -79,16 +76,19 @@ function makeButtons(){
         allButtons[`btn${btn}`] = document.createElement('button');
         allButtons[`btn${btn}`].textContent = btn;
         allButtons[`btn${btn}`].className = 'opButton';
-        calculatorBody.appendChild(allButtons[`btn${btn}`]).id = btn;
+        allButtons[`btn${btn}`].value = btn;
+        calculatorBody.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
     });
 
     allButtons['dot'] = document.createElement('button');
     allButtons['dot'].textContent = '.';
-    calculatorBody.appendChild(allButtons['dot']).id = '.';
+    allButtons['dot'].value = '.';
+    calculatorBody.appendChild(allButtons['dot']).id = 'dot';
 
     allButtons['equals'] = document.createElement('button');
     allButtons['equals'].textContent = '=';
-    calculatorBody.appendChild(allButtons['equals']).id = '=';
+    allButtons['equals'].value = '=';
+    calculatorBody.appendChild(allButtons['equals']).id = 'equals';
 
     return allButtons;
 }
@@ -104,8 +104,8 @@ let currentState = {
     result: '',
 };
 
-function displayClick(value){
-    currentState['display'] += value.id;
+function displayClick(btnVal){
+    currentState['display'] += btnVal.value;
     display.textContent = currentState['display'];
 }
 
@@ -190,7 +190,7 @@ opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
         clear('valB');
     }
 
-    currentState['operator']=btn.id;
+    currentState['operator']=btn.value;
     currentState['changeValue']=true;
     console.log(btn);
     displayClick(btn);

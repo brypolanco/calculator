@@ -1,0 +1,48 @@
+body{
+    background-color: rgb(173, 173, 173);
+}
+#calculator-container{
+    display: grid;
+    background-color: rgb(43, 187, 187);
+    margin: 0 auto;
+    height: 580px;
+    width: 400px;
+
+    grid-template-areas:
+        "display display display display"
+        "0 0 0 clear"
+        "num num num operate"
+        "num num num operate"
+        "num num num operate"
+        "num num num operate";
+}
+
+#display{/*
+    grid-column-start: 1;
+    grid-column-end: 5;*/
+    grid-area: display;
+    background-color: rgb(219, 219, 219);
+    height: 80%;
+    margin: 2%;
+    text-align: right;
+    font-size: large;
+}
+/*
+#clear{
+    grid-area: clear;
+    grid-row-start: 2;
+    grid-column-start: 4;
+    grid-column-end: 4;
+}
+
+.numButton{
+    grid-area: num;
+}
+
+.opButton{
+    grid-area: operate;
+}
+
+#\#.{
+    background-color: violet;
+}*/

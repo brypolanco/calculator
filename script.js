@@ -1,19 +1,19 @@
 //Operations
 function add(a,b){
     let result = a+b;
-    result = resultConversion(result);
+    result = resultRound(result);
     return result;
 }
 
 function subtract(a,b){
     let result = a-b;
-    result = resultConversion(result);
+    result = resultRound(result);
     return result;
 }
 
 function multiply(a,b){
     let result = a*b;
-    result = resultConversion(result);
+    result = resultRound(result);
     return result;
 }
 
@@ -23,11 +23,11 @@ function divide(a,b){
         return;
     }
     let result = a/b;
-    result = resultConversion(result);
+    result = resultRound(result);
     return result;
 }
 
-function resultConversion(result){
+function resultRound(result){
     return Math.round((result + Number.EPSILON) * 100) / 100;
 }
 
@@ -154,6 +154,9 @@ buttons['clear'].addEventListener('click', ()=> {
 buttons['dot'].addEventListener('click', () => displayClick(buttons['dot']));
 
 buttons['equals'].addEventListener('click',()=>{
+    if(currentState['display']===''||currentState['valB']===''){
+        return alert('Must have values to perform calculations');
+    }
     currentState['result'] = operate(currentState['operator'],currentState['valA'],currentState['valB']).toString();
     currentState['display'] = currentState['result'];
     display.textContent = currentState['result'];

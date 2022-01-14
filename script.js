@@ -56,19 +56,20 @@ function operate(sign, a, b){
 //Button Creations
 const display = document.querySelector('#display');
 const calculatorBody = document.querySelector('#calculator-container');
+const buttonContainer = document.querySelector('#button-container');
 
 function makeButtons(){
     let allButtons = {};
     allButtons['clear'] = document.createElement('button');
     allButtons['clear'].textContent = 'AC';
-    calculatorBody.appendChild(allButtons['clear']).id = 'clear';
+    buttonContainer.appendChild(allButtons['clear']).id = 'clear';
 
     for(let i = 9; i >= 0; i--){
         allButtons[`btn${i}`] = document.createElement('button');
         allButtons[`btn${i}`].textContent = i;
         allButtons[`btn${i}`].className = 'numButton';
         allButtons[`btn${i}`].value = i;
-        calculatorBody.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
+        buttonContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
     }
 
     const operators = ['+', '-', '*', '/'];
@@ -77,18 +78,18 @@ function makeButtons(){
         allButtons[`btn${btn}`].textContent = btn;
         allButtons[`btn${btn}`].className = 'opButton';
         allButtons[`btn${btn}`].value = btn;
-        calculatorBody.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
+        buttonContainer.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
     });
 
     allButtons['dot'] = document.createElement('button');
     allButtons['dot'].textContent = '.';
     allButtons['dot'].value = '.';
-    calculatorBody.appendChild(allButtons['dot']).id = 'dot';
+    buttonContainer.appendChild(allButtons['dot']).id = 'dot';
 
     allButtons['equals'] = document.createElement('button');
     allButtons['equals'].textContent = '=';
     allButtons['equals'].value = '=';
-    calculatorBody.appendChild(allButtons['equals']).id = 'equals';
+    buttonContainer.appendChild(allButtons['equals']).id = 'equals';
 
     return allButtons;
 }

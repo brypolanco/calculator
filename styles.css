@@ -7,42 +7,55 @@ body{
     margin: 0 auto;
     height: 580px;
     width: 400px;
-
+/*
     grid-template-areas:
         "display display display display"
         "0 0 0 clear"
         "num num num operate"
         "num num num operate"
         "num num num operate"
-        "num num num operate";
+        "num num num operate";*/
 }
 
-#display{/*
+#display{
     grid-column-start: 1;
-    grid-column-end: 5;*/
-    grid-area: display;
+    grid-column-end: 5;
     background-color: rgb(219, 219, 219);
     height: 80%;
     margin: 2%;
     text-align: right;
     font-size: large;
 }
-/*
+
 #clear{
-    grid-area: clear;
     grid-row-start: 2;
     grid-column-start: 4;
     grid-column-end: 4;
 }
 
 .numButton{
-    grid-area: num;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    
 }
 
 .opButton{
-    grid-area: operate;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    grid-column-start: 4;
+    grid-column-end: 4;
 }
 
-#\#.{
-    background-color: violet;
-}*/
+#dot{
+    grid-row-start: 5;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+#equals{
+    grid-row-start: 5;
+    grid-column-start: 3;
+    grid-column-end: 4;
+}

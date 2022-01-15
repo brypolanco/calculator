@@ -54,22 +54,32 @@ function operate(sign, a, b){
 
 
 //Button Creations
-const display = document.querySelector('#display');
-const calculatorBody = document.querySelector('#calculator-container');
-const buttonContainer = document.querySelector('#button-container');
+
 
 function makeButtons(){
+    const display = document.querySelector('#display');
+    const calculatorBody = document.querySelector('#calculator-container');
+    const buttonContainer = document.querySelector('#button-container');
+    const numContainer = document.createElement('div');
+    numContainer.id = 'number-container';
+    buttonContainer.appendChild(numContainer);
+    const opContainer = document.createElement('div');
+    opContainer.id = 'operator-container';
+    buttonContainer.appendChild(opContainer);
+
     let allButtons = {};
     allButtons['clear'] = document.createElement('button');
     allButtons['clear'].textContent = 'AC';
     buttonContainer.appendChild(allButtons['clear']).id = 'clear';
+
+    
 
     for(let i = 9; i >= 0; i--){
         allButtons[`btn${i}`] = document.createElement('button');
         allButtons[`btn${i}`].textContent = i;
         allButtons[`btn${i}`].className = 'numButton';
         allButtons[`btn${i}`].value = i;
-        buttonContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
+        numContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
     }
 
     const operators = ['+', '-', '*', '/'];
@@ -78,7 +88,7 @@ function makeButtons(){
         allButtons[`btn${btn}`].textContent = btn;
         allButtons[`btn${btn}`].className = 'opButton';
         allButtons[`btn${btn}`].value = btn;
-        buttonContainer.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
+        opContainer.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
     });
 
     allButtons['dot'] = document.createElement('button');

@@ -64,36 +64,29 @@ function makeButtons(){
     allButtons['clear'] = document.createElement('button');
     allButtons['clear'].textContent = 'AC';
     buttonContainer.appendChild(allButtons['clear']).id = 'clear';
-
     
-    
-    /*
-    const numContainer = document.createElement('div');
-    numContainer.id = 'number-container';
-    buttonContainer.appendChild(numContainer);
-    const opContainer = document.createElement('div');
-    opContainer.id = 'operator-container';
-    buttonContainer.appendChild(opContainer);
-    */
-    
-    for(let i = 9; i >= 0; i--){
-        allButtons[`btn${i}`] = document.createElement('button');
-        allButtons[`btn${i}`].textContent = i;
-        allButtons[`btn${i}`].className = 'numButton';
-        allButtons[`btn${i}`].value = i;
-        buttonContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
+    let start = 7;
+    for(let row = 0; row < 4; row++){
+        if(row===3){
+            start = 0;
+        }
+        let temp = start;
+        for(let col=0; col<3; col++){
+            let i = temp;
+            allButtons[`btn${i}`] = document.createElement('button');
+            allButtons[`btn${i}`].textContent = i;
+            allButtons[`btn${i}`].className = 'numButton';
+            allButtons[`btn${i}`].value = i;
+            buttonContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
+            if(i===0){
+                break;
+            }
+            temp++;
+        }
+        start -= 3;
     }
 
     const operators = {divide: '/', multiply: '*', subtract: '-', add: '+'};
-    /*
-    operators.forEach(btn =>{
-        allButtons[`btn${btn}`] = document.createElement('button');
-        allButtons[`btn${btn}`].textContent = btn;
-        allButtons[`btn${btn}`].className = 'opButton';
-        allButtons[`btn${btn}`].value = btn;
-        buttonContainer.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
-    });*/
-
     for(let btn in operators){
         allButtons[`btn${btn}`] = document.createElement('button');
         allButtons[`btn${btn}`].textContent = operators[btn];
@@ -101,8 +94,6 @@ function makeButtons(){
         allButtons[`btn${btn}`].value = operators[btn];
         buttonContainer.appendChild(allButtons[`btn${btn}`]).id = btn;
     }
-
-
 
     allButtons['dot'] = document.createElement('button');
     allButtons['dot'].textContent = '.';

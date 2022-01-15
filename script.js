@@ -35,8 +35,6 @@ function operate(sign, a, b){
     let aFloat = parseFloat(a);
     let bFloat = parseFloat(b);
 
-    console.log(`${aFloat} + '' + ${bFloat}`)
-
     switch(sign){
         case '+':
             return add(aFloat,bFloat);
@@ -54,18 +52,13 @@ function operate(sign, a, b){
 
 
 //Button Creations
-
-
 function makeButtons(){
-    const display = document.querySelector('#display');
     const calculatorBody = document.querySelector('#calculator-container');
-    const buttonContainer = document.querySelector('#button-container');
-    const numContainer = document.createElement('div');
-    numContainer.id = 'number-container';
-    buttonContainer.appendChild(numContainer);
-    const opContainer = document.createElement('div');
-    opContainer.id = 'operator-container';
-    buttonContainer.appendChild(opContainer);
+    const display = document.createElement('div');
+    display.textContent = '0';
+    calculatorBody.appendChild(display).id = 'display';
+    const buttonContainer = document.createElement('div');
+    calculatorBody.appendChild(buttonContainer).id = 'button-container';
 
     let allButtons = {};
     allButtons['clear'] = document.createElement('button');
@@ -73,23 +66,43 @@ function makeButtons(){
     buttonContainer.appendChild(allButtons['clear']).id = 'clear';
 
     
-
+    
+    /*
+    const numContainer = document.createElement('div');
+    numContainer.id = 'number-container';
+    buttonContainer.appendChild(numContainer);
+    const opContainer = document.createElement('div');
+    opContainer.id = 'operator-container';
+    buttonContainer.appendChild(opContainer);
+    */
+    
     for(let i = 9; i >= 0; i--){
         allButtons[`btn${i}`] = document.createElement('button');
         allButtons[`btn${i}`].textContent = i;
         allButtons[`btn${i}`].className = 'numButton';
         allButtons[`btn${i}`].value = i;
-        numContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
+        buttonContainer.appendChild(allButtons[`btn${i}`]).id=`num${i}`;
     }
 
-    const operators = ['+', '-', '*', '/'];
+    const operators = {divide: '/', multiply: '*', subtract: '-', add: '+'};
+    /*
     operators.forEach(btn =>{
         allButtons[`btn${btn}`] = document.createElement('button');
         allButtons[`btn${btn}`].textContent = btn;
         allButtons[`btn${btn}`].className = 'opButton';
         allButtons[`btn${btn}`].value = btn;
-        opContainer.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
-    });
+        buttonContainer.appendChild(allButtons[`btn${btn}`]).id = `op${btn}`;
+    });*/
+
+    for(let btn in operators){
+        allButtons[`btn${btn}`] = document.createElement('button');
+        allButtons[`btn${btn}`].textContent = operators[btn];
+        allButtons[`btn${btn}`].className = 'opButton';
+        allButtons[`btn${btn}`].value = operators[btn];
+        buttonContainer.appendChild(allButtons[`btn${btn}`]).id = btn;
+    }
+
+
 
     allButtons['dot'] = document.createElement('button');
     allButtons['dot'].textContent = '.';
@@ -131,10 +144,6 @@ function getValB (){
     });
 
     position = valBArray.length - position - 1;
-
-    console.log(position)
-
-
     return currentState['display'].slice(position+1);
 
 }
@@ -159,7 +168,6 @@ function clear(...objKey){
 buttons['clear'].addEventListener('click', ()=> {
     clear('display','valA','valB','result','operator','changeValue');
     display.textContent = currentState['display'];
-    console.log(currentState);
 });
 
 buttons['dot'].addEventListener('click', () => displayClick(buttons['dot']));
@@ -173,7 +181,6 @@ buttons['equals'].addEventListener('click',()=>{
     display.textContent = currentState['result'];
     currentState['valA']=currentState['result']
     clear('valB','result','operator','changeValue');
-    console.log(currentState);
 });
 
 const numButtonsArray = Array.from(document.querySelectorAll('.numButton'));
@@ -181,14 +188,10 @@ numButtonsArray.forEach(btn => btn.addEventListener('click', () => {
     displayClick(btn);
     if(currentState['changeValue']===false){
         currentState['valA']=currentState['display'];
-
-        console.log(currentState);
     }
     else if(currentState['changeValue']===true){
         let valB = getValB();
         currentState['valB']= valB;
-
-        console.log(currentState);
     }
 }));
 
@@ -203,7 +206,5 @@ opButtonsArray.forEach(btn => btn.addEventListener('click', () => {
 
     currentState['operator']=btn.value;
     currentState['changeValue']=true;
-    console.log(btn);
     displayClick(btn);
-    console.log(currentState);
 }));
